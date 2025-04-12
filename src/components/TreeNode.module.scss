@@ -1,0 +1,37 @@
+@import '../styles/utils/';
+
+.treeNodeInputContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 10px;
+  margin: 10px 30px;
+}
+.icon {
+  height: 25px;
+  width: 25px;
+  object-fit: contain;
+}
+.input {
+  width: 200px;
+  height: 25px;
+}
+.commonButton {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    background-color: #5c5c5c;
+  }
+}
+.darkButton {
+  @extend .commonButton;
+  background-color: black;
+}
+.lightButton {
+  @extend .commonButton;
+  background-color: white;
+}
