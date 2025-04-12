@@ -3,6 +3,7 @@ import TreeView from './components/TreeView'
 import Header from './components/Header'
 import { TreeContextProvider } from './contexts/TreeContext'
 import JsonViewer from './components/JsonViewer'
+import SearchBar from './components/SearchBar'
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <TreeContextProvider>
         <TreeView />
         <JsonViewer />
+        <SearchBar />
       </TreeContextProvider>
     </div>
   )

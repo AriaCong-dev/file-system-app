@@ -1,37 +1,118 @@
-@import '../styles/utils/';
+@import '../styles/utils';
 
-.treeNodeInputContainer {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  gap: 10px;
-  margin: 10px 30px;
-}
-.icon {
-  height: 25px;
-  width: 25px;
-  object-fit: contain;
-}
-.input {
-  width: 200px;
-  height: 25px;
-}
-.commonButton {
-  width: 35px;
-  height: 35px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
+.treeNodeContainer {
+  @include flex-column;
+  color: $black;
+  font-size: $font-size-base;
+  padding: $space-item;
   justify-content: center;
-  &:hover {
-    background-color: #5c5c5c;
+  transition: all 0.3s ease;
+}
+
+@mixin line-style($height) {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: calc(#{$icon-size} / 2 * -1);
+  width: 20px;
+  height: $height;
+  border-color: $black;
+  border-left: 1px solid $black;
+}
+
+.treeNodeContainerLine {
+  position: relative;
+  &::before {
+    @include line-style(calc(100%));
+  }
+  &:last-child::before {
+    @include line-style($icon-size);
+  }
+  &:first-child::before {
+    @include line-style(calc(100% - #{$icon-size} / 2));
+    top: 0;
+  }
+  &:last-child:first-child::before {
+    @include line-style(calc(#{$icon-size} / 1.5));
+    top: 0;
   }
 }
-.darkButton {
-  @extend .commonButton;
-  background-color: black;
+
+.nodeContainerLine {
+  display: flex;
+  align-items: center;
+  gap: $space-item;
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    transform: translateX(calc(-100%)) translateY(-50%);
+    width: $icon-size / 1.5;
+    height: $icon-size;
+    border-bottom: 1px solid $black;
+  }
 }
-.lightButton {
-  @extend .commonButton;
-  background-color: white;
+
+.treeNodeWrapper {
+  display: flex;
+  gap: $space-item;
+  align-items: center;
+}
+.treeNodeHover {
+  background-color: transparent;
+  border: $border-style;
+}
+
+.icon {
+  width: $icon-size;
+  height: $icon-size;
+  padding: $icon-padding;
+  object-fit: contain;
+}
+.commonBtn {
+  width: $icon-size;
+  height: $icon-size;
+  padding: $icon-padding;
+  border-radius: $border-radius;
+  cursor: pointer;
+  &:hover {
+    background-color: $hover-color;
+  }
+}
+
+.nodeContainer {
+  display: flex;
+  align-items: center;
+  gap: $space-item;
+}
+
+.actionBtnRound {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: $black;
+  @include flex-center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  img {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    background-color: $hover-color;
+  }
+}
+.nodeTypeBtn {
+  padding: $space-item;
+  font-size: $font-size-base;
+  background-color: $hover-color;
+  border-radius: $border-radius;
+  border: $border-style;
+}
+.actionBtnContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }

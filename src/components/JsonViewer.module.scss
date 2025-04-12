@@ -1,1 +1,23 @@
-@import '../styles/utils/';
+@import '../styles/utils';
+.jsonViewWrapper {
+  position: relative;
+  height: 350px;
+  margin-top: 20vh;
+}
+.title {
+  @include title-style;
+}
+.textarea {
+  width: 800px;
+  height: 400px;
+  position: absolute;
+  left: 50%;
+  top: 80%;
+  transform: translate(-50%, -50%);
+  padding: 1rem;
+  border: $border-style;
+  border-radius: $border-radius;
+  font-family: $font-base;
+  font-size: $font-size-base;
+  resize: both;
+}

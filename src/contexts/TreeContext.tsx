@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useState } from 'react'
+import React, { createContext, ReactNode, useState, useContext } from 'react'
 import { NodeModel } from '../models/node.model'
 
 // props in the contexts to share to the all components in the provider
@@ -30,5 +30,11 @@ export const TreeContextProvider = ({ children }: { children: ReactNode }) => {
     </TreeContext.Provider>
   )
 }
-
-// 3. create consumer
+// 3. create custom hook to use the context
+export const useTreeContext = () => {
+  const context = useContext(TreeContext)
+  if (!context) {
+    throw new Error('useTreeContext must be used within a TreeContextProvider')
+  }
+  return context
+}

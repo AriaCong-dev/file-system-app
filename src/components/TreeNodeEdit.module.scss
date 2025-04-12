@@ -1,0 +1,49 @@
+@import '../styles/utils/';
+.inputContainer {
+  display: flex;
+  align-items: center;
+  gap: $space-item;
+}
+.icon {
+  width: $icon-size;
+  height: $icon-size;
+  padding: $icon-padding;
+  object-fit: contain;
+}
+
+.commonButton {
+  width: $icon-size;
+  height: $icon-size;
+  padding: $icon-padding;
+  border-radius: $border-radius;
+  @include flex-center;
+  cursor: pointer;
+  &:hover {
+    background-color: $hover-color;
+  }
+  & img {
+    width: $icon-size;
+    height: $icon-size;
+  }
+}
+.input {
+  border: 1px solid $black;
+  border-radius: 0.25rem;
+  font-size: $font-size-base;
+  width: 12rem;
+  height: 2rem;
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+  }
+}
+
+.darkButton {
+  @extend .commonButton;
+  background: $black;
+}
+.lightButton {
+  @extend .commonButton;
+  background: $white;
+  border: $border-style;
+}
