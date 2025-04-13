@@ -32,7 +32,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode, depth = 0 }) => {
     nodeTypeSelect,
     setNodeTypeSelect,
     childTypeSelector,
-  } = useTreeNodeService(node)
+  } = useTreeNodeService(node, parentNode)
   const [isHover, setIsHover] = useState(false)
 
   const indentationStyle = (depth: number) => {
@@ -69,7 +69,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode, depth = 0 }) => {
                 <button className={styles.actionBtn} onClick={handleAddNode}>
                   <img src={addIconDark} alt="add" />
                 </button>
-                <button className={styles.actionBtn}>
+                <button className={styles.actionBtn} onClick={handleDeleteNode}>
                   <img src={deleteIconDark} alt="delete" />
                 </button>
               </div>
@@ -79,12 +79,12 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode, depth = 0 }) => {
       </div>
       {node.children && node.children.length > 0 && (
         <ul>
-          {node.children.map((node) => {
+          {node.children.map((child) => {
             return (
               <TreeNode
                 key={node.id}
-                node={node}
-                parentNode={node}
+                node={child} // loop the chrildre array and pass the child node to the TreeNode component
+                parentNode={node} // pass the parent node to the child
                 depth={depth + 1}
               />
             )
