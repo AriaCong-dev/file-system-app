@@ -43,7 +43,6 @@ const useTreeNodeService = (node: NodeModel, parentNode?: NodeModel) => {
     }
     setEditingNodeId(null)
   }
-  const handleEditNode = () => {}
 
   const childTypeSelector = (nodeType: 'file' | 'folder') => {
     const newNode: NodeModel = {
@@ -52,6 +51,7 @@ const useTreeNodeService = (node: NodeModel, parentNode?: NodeModel) => {
       type: nodeType,
       children: nodeType === 'folder' ? [] : undefined,
     }
+
     node.children = [...(node.children || []), newNode]
     setTreeArray((prev) => [...prev]) // trigger rerndering
     setEditingNodeId(newNode.id)

@@ -114,7 +114,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode, depth = 0 }) => {
           {node.children.map((child) => {
             return (
               <TreeNode
-                key={node.id}
+                key={child.id}
                 node={child} // loop the chrildre array and pass the child node to the TreeNode component
                 parentNode={node} // pass the parent node to the child
                 depth={depth + 1}
