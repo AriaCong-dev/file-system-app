@@ -7,6 +7,7 @@ import folderIcon from '../assets/folder-open-regular.svg'
 import fileIcon from '../assets/file-regular.svg'
 import addIconDark from '../assets/plus-dark.svg'
 import deleteIconDark from '../assets/trash-dark.svg'
+import addIconLight from '../assets/plus-light.svg'
 // the idea is that TreeNode renders one node, and if it has children, it can recursively render more TreeNodes from within
 interface TreeNodeProps {
   node: NodeModel // it is a single node not an array of nodes
@@ -25,6 +26,11 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode, depth = 0 }) => {
   } = useTreeNodeService(node, parentNode)
   const [isHover, setIsHover] = useState(false)
   const [isRenaming, setIsRenaming] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(true)
+
+  const handleDoubleClick = () => {
+    setIsExpanded((prev) => !prev) // Toggle the state
+  }
 
   const indentationStyle = (depth: number) => {
     return depth > 0 ? { paddingLeft: `${depth * 5}px` } : undefined
@@ -49,7 +55,15 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode, depth = 0 }) => {
           <>
             <div className={styles.treeNodeItemContainer}>
               {node.type === 'folder' ? (
-                <img src={folderIcon} alt="folder" className={styles.icon} />
+                <>
+                  <button
+                    className={styles.collapseBtn}
+                    onClick={handleDoubleClick}
+                  >
+                    {isExpanded ? '-' : '+'}
+                  </button>
+                  <img src={folderIcon} alt="folder" className={styles.icon} />
+                </>
               ) : (
                 <img src={fileIcon} alt="file" className={styles.icon} />
               )}
@@ -79,9 +93,11 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode, depth = 0 }) => {
             </div>
             {isHover && !editingNodeId && (
               <div className={styles.actionBtnContainer}>
-                <button className={styles.actionBtn} onClick={handleAddNode}>
-                  <img src={addIconDark} alt="add" />
-                </button>
+                {node.type === 'folder' && (
+                  <button className={styles.actionBtn} onClick={handleAddNode}>
+                    <img src={addIconDark} alt="add" />
+                  </button>
+                )}
                 <button
                   className={styles.actionBtn}
                   onClick={handleDeleteOrCancelNode}
@@ -93,7 +109,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode, depth = 0 }) => {
           </>
         )}
       </div>
-      {node.children && node.children.length > 0 && (
+      {node.children && node.children.length > 0 && isExpanded && (
         <ul>
           {node.children.map((child) => {
             return (
