@@ -3,6 +3,7 @@
 .treeNodeContainer {
   @include flex-column;
   gap: $space-item;
+  padding: 0.2rem;
 }
 .treeNodeItemContainer {
   display: flex;

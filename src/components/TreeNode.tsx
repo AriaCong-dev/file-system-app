@@ -93,9 +93,11 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode, depth = 0 }) => {
             </div>
             {isHover && !editingNodeId && (
               <div className={styles.actionBtnContainer}>
-                <button className={styles.actionBtn} onClick={handleAddNode}>
-                  <img src={addIconDark} alt="add" />
-                </button>
+                {node.type === 'folder' && (
+                  <button className={styles.actionBtn} onClick={handleAddNode}>
+                    <img src={addIconDark} alt="add" />
+                  </button>
+                )}
                 <button
                   className={styles.actionBtn}
                   onClick={handleDeleteOrCancelNode}
