@@ -17,6 +17,9 @@
 .treeNodeHover {
   border: $border-style;
   background-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: $space-item;
 }
 
 .actionBtnContainer {
