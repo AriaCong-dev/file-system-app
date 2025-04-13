@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import TreeNode from '../components/TreeNode'
 import { useTreeContext } from '../contexts/TreeContext'
 import { NodeModel } from '../models/node.model'
 

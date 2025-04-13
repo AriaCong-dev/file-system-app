@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './TreeView.module.scss'
 import TreeNode from './TreeNode'
 import { NodeModel } from '../models/node.model'

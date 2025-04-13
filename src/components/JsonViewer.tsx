@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './JsonViewer.module.scss'
 import { useTreeContext } from '../contexts/TreeContext'
 

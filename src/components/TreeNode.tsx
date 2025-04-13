@@ -1,12 +1,10 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import styles from './TreeNode.module.scss'
 import useTreeNodeService from '../hooks/useTreeNodeService'
 import { NodeModel } from '../models/node.model'
 import { TreeNodeEdit } from './TreeNodeEdit'
 import folderIcon from '../assets/folder-open-regular.svg'
 import fileIcon from '../assets/file-regular.svg'
-import yesIconDark from '../assets/check-dark.svg'
-import noIconLight from '../assets/xmark-light.svg'
 import addIconDark from '../assets/plus-dark.svg'
 import deleteIconDark from '../assets/trash-dark.svg'
 // the idea is that TreeNode renders one node, and if it has children, it can recursively render more TreeNodes from within
@@ -18,19 +16,13 @@ interface TreeNodeProps {
 
 const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode, depth = 0 }) => {
   const {
-    // isEditing,
     inputType,
-    setInputType,
     handleSaveNode,
     handleCancelNode,
     handleAddNode,
     handleDeleteNode,
     editingNodeId,
-    setEditingNodeId,
-    treeArray,
-    setTreeArray,
     nodeTypeSelect,
-    setNodeTypeSelect,
     childTypeSelector,
   } = useTreeNodeService(node, parentNode)
   const [isHover, setIsHover] = useState(false)
