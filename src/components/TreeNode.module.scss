@@ -1,37 +1,53 @@
-@import '../styles/utils/';
+@import '../styles/utils';
 
-.treeNodeInputContainer {
+.treeNodeContainer {
+  @include flex-column;
+  gap: $space-item;
+}
+.treeNodeItemContainer {
   display: flex;
   align-items: center;
-  flex-direction: row;
-  gap: 10px;
-  margin: 10px 30px;
+  gap: $space-item;
 }
 .icon {
-  height: 25px;
-  width: 25px;
-  object-fit: contain;
+  width: $icon-size;
+  height: $icon-size;
 }
-.input {
-  width: 200px;
-  height: 25px;
+
+.treeNodeHover {
+  border: $border-style;
+  background-color: transparent;
 }
-.commonButton {
-  width: 35px;
-  height: 35px;
-  cursor: pointer;
+
+.actionBtnContainer {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: $space-item;
+}
+.actionBtn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: $black;
+  @include flex-center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  img {
+    width: 18px;
+    height: 18px;
+  }
+
   &:hover {
-    background-color: #5c5c5c;
+    background-color: $hover-color;
   }
 }
-.darkButton {
-  @extend .commonButton;
-  background-color: black;
-}
-.lightButton {
-  @extend .commonButton;
-  background-color: white;
+.typeSelectionBtn {
+  width: 100px;
+  height: 30px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: $font-size-base;
+  &:hover {
+    background-color: $hover-color;
+  }
 }

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styles from './TreeNode.module.scss'
 import useTreeNodeService from '../hooks/useTreeNodeService'
 import { NodeModel } from '../models/node.model'
+import { TreeNodeEdit } from './TreeNodeEdit'
 import folderIcon from '../assets/folder-open-regular.svg'
 import fileIcon from '../assets/file-regular.svg'
 import yesIconDark from '../assets/check-dark.svg'
@@ -12,36 +13,101 @@ import deleteIconDark from '../assets/trash-dark.svg'
 interface TreeNodeProps {
   node: NodeModel // it is a single node not an array of nodes
   parentNode?: NodeModel
+  depth?: number
 }
 
-const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode }) => {
+const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode, depth = 0 }) => {
   const {
-    inputValue,
-    setInputValue,
+    // isEditing,
     inputType,
     setInputType,
     handleSaveNode,
     handleCancelNode,
-  } = useTreeNodeService()
+    handleAddNode,
+    handleDeleteNode,
+    editingNodeId,
+    setEditingNodeId,
+    treeArray,
+    setTreeArray,
+    nodeTypeSelect,
+    setNodeTypeSelect,
+    childTypeSelector,
+  } = useTreeNodeService(node)
+  const [isHover, setIsHover] = useState(false)
+
+  const indentationStyle = (depth: number) => {
+    return depth > 0 ? { paddingLeft: `${depth * 5}px` } : undefined
+  }
+  const isEditing = editingNodeId === node.id
+
   return (
-    <li className={styles.treeNodeInputContainer}>
-      <img
-        className={styles.icon}
-        src={inputType === 'folder' ? folderIcon : fileIcon}
-        alt={inputType === 'folder' ? 'folderIcon' : 'fileIcon'}
-      />
-      <input
-        autoFocus
-        className={styles.input}
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-      />
-      <button className={styles.darkButton} onClick={handleSaveNode}>
-        <img src={yesIconDark} alt="yes" className={styles.icon} />
-      </button>
-      <button className={styles.lightButton} onClick={handleCancelNode}>
-        <img src={noIconLight} alt="no" className={styles.icon} />
-      </button>
+    <li className={styles.treeNodeContainer} style={indentationStyle(depth)}>
+      <div
+        className={isHover && !isEditing ? styles.treeNodeHover : ''}
+        onMouseEnter={() => setIsHover(true)}
+        onMouseLeave={() => setIsHover(false)}
+      >
+        {isEditing ? (
+          <TreeNodeEdit
+            nodeIcon={node.type === 'folder' ? folderIcon : fileIcon}
+            nodeName={node.name || ''}
+            onSave={handleSaveNode}
+            onCancel={handleCancelNode}
+          />
+        ) : (
+          <>
+            <div className={styles.treeNodeItemContainer}>
+              {node.type === 'folder' ? (
+                <img src={folderIcon} alt="folder" className={styles.icon} />
+              ) : (
+                <img src={fileIcon} alt="file" className={styles.icon} />
+              )}
+              {node.name}
+            </div>
+            {isHover && !editingNodeId && (
+              <div className={styles.actionBtnContainer}>
+                <button className={styles.actionBtn} onClick={handleAddNode}>
+                  <img src={addIconDark} alt="add" />
+                </button>
+                <button className={styles.actionBtn}>
+                  <img src={deleteIconDark} alt="delete" />
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+      {node.children && node.children.length > 0 && (
+        <ul>
+          {node.children.map((node) => {
+            return (
+              <TreeNode
+                key={node.id}
+                node={node}
+                parentNode={node}
+                depth={depth + 1}
+              />
+            )
+          })}
+        </ul>
+      )}
+      {nodeTypeSelect === node.id && (
+        //   <div style={indentationStyle(depth)}>
+        <div>
+          <button
+            className={styles.typeSelectionBtn}
+            onClick={() => childTypeSelector('folder')}
+          >
+            Folder
+          </button>
+          <button
+            className={styles.typeSelectionBtn}
+            onClick={() => childTypeSelector('file')}
+          >
+            File
+          </button>
+        </div>
+      )}
     </li>
   )
 }

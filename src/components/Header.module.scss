@@ -1,15 +1,12 @@
 @import '../styles/utils';
 
 .header {
-  background-color: black;
-  color: white;
+  background-color: $black;
+  color: $white;
   width: 100%;
-  padding: 1rem;
+  padding: 1rem 1.5rem;
 }
-.h1 {
-  font-family: $font-base;
-  font-size: 1.5rem;
-  font-weight: 1000;
-  margin: auto 0;
-  text-align: center;
+
+.title {
+  @include title-style;
 }

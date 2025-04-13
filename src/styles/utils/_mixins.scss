@@ -1,0 +1,17 @@
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin title-style {
+  font-size: $font-size-title;
+  font-weight: $font-weight-title;
+  margin: auto 0;
+  text-align: center;
+}

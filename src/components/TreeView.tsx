@@ -2,27 +2,30 @@ import React from 'react'
 import styles from './TreeView.module.scss'
 import TreeNode from './TreeNode'
 import { NodeModel } from '../models/node.model'
+import { useTreeContext } from '../contexts/TreeContext'
 
 const TreeView: React.FC = () => {
-  // mock data for root nodes
-  const rootNodes: NodeModel[] = [
-    { name: 'Root', type: 'file', id: '1', children: [] },
-    { name: 'Root', type: 'folder', id: '1', children: [] },
-  ]
-
-  const handleAddToRoot = () => {}
+  const { treeArray, setTreeArray, setEditingNodeId } = useTreeContext()
+  const handleAddToRoot = () => {
+    const newNode: NodeModel = {
+      id: Date.now().toString(),
+      name: '',
+      type: 'folder',
+      children: [],
+    }
+    setEditingNodeId(newNode.id)
+    setTreeArray((prev) => [...prev, newNode])
+  }
   return (
     <div className={styles.treeViewContainer}>
-      <button className={styles.addButton} onClick={handleAddToRoot}>
+      <button className={styles.addRootBtn} onClick={handleAddToRoot}>
         Add to Root
       </button>
-      <div>
-        <ul>
-          {rootNodes.map((node) => (
-            <TreeNode key={node.id} node={node} />
-          ))}
-        </ul>
-      </div>
+      <ul className={styles.treeViewList}>
+        {treeArray.map((node) => (
+          <TreeNode key={node.id} node={node} />
+        ))}
+      </ul>
     </div>
   )
 }
