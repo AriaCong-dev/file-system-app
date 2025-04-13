@@ -1,12 +1,10 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import styles from './TreeNode.module.scss'
 import useTreeNodeService from '../hooks/useTreeNodeService'
 import { NodeModel } from '../models/node.model'
 import { TreeNodeEdit } from './TreeNodeEdit'
 import folderIcon from '../assets/folder-open-regular.svg'
 import fileIcon from '../assets/file-regular.svg'
-import yesIconDark from '../assets/check-dark.svg'
-import noIconLight from '../assets/xmark-light.svg'
 import addIconDark from '../assets/plus-dark.svg'
 import deleteIconDark from '../assets/trash-dark.svg'
 // the idea is that TreeNode renders one node, and if it has children, it can recursively render more TreeNodes from within
@@ -18,21 +16,15 @@ interface TreeNodeProps {
 
 const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode, depth = 0 }) => {
   const {
-    // isEditing,
     inputType,
-    setInputType,
     handleSaveNode,
     handleCancelNode,
     handleAddNode,
     handleDeleteNode,
     editingNodeId,
-    setEditingNodeId,
-    treeArray,
-    setTreeArray,
     nodeTypeSelect,
-    setNodeTypeSelect,
     childTypeSelector,
-  } = useTreeNodeService(node)
+  } = useTreeNodeService(node, parentNode)
   const [isHover, setIsHover] = useState(false)
 
   const indentationStyle = (depth: number) => {
@@ -69,7 +61,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode, depth = 0 }) => {
                 <button className={styles.actionBtn} onClick={handleAddNode}>
                   <img src={addIconDark} alt="add" />
                 </button>
-                <button className={styles.actionBtn}>
+                <button className={styles.actionBtn} onClick={handleDeleteNode}>
                   <img src={deleteIconDark} alt="delete" />
                 </button>
               </div>
@@ -79,12 +71,12 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode, depth = 0 }) => {
       </div>
       {node.children && node.children.length > 0 && (
         <ul>
-          {node.children.map((node) => {
+          {node.children.map((child) => {
             return (
               <TreeNode
                 key={node.id}
-                node={node}
-                parentNode={node}
+                node={child} // loop the chrildre array and pass the child node to the TreeNode component
+                parentNode={node} // pass the parent node to the child
                 depth={depth + 1}
               />
             )
