@@ -23,18 +23,14 @@ const useTreeNodeService = (node: NodeModel, parentNode?: NodeModel) => {
     setEditingNodeId(null)
     setTreeArray((prev) => [...prev])
   }
-  const handleCancelNode = () => {
-    setEditingNodeId(null)
-  }
+
   const handleAddNode = () => {
     setNodeTypeSelect(node.id)
   }
 
   // // delete from parent's children
   // if not delete from the root level of the tree array
-  const handleDeleteNode = () => {
-    console.log('delete node', node.name)
-    console.log('parent node', parentNode?.name)
+  const handleDeleteOrCancelNode = () => {
     if (parentNode) {
       parentNode.children = parentNode.children?.filter(
         (child) => child.id !== node.id
@@ -71,9 +67,8 @@ const useTreeNodeService = (node: NodeModel, parentNode?: NodeModel) => {
     inputType,
     setInputType,
     handleSaveNode,
-    handleCancelNode,
+    handleDeleteOrCancelNode,
     handleAddNode,
-    handleDeleteNode,
     nodeTypeSelect,
     setNodeTypeSelect,
     childTypeSelector,
