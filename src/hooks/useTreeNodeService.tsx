@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import { useState } from 'react'
 import TreeNode from '../components/TreeNode'
 import { useTreeContext } from '../contexts/TreeContext'
 import { NodeModel } from '../models/node.model'
@@ -34,14 +34,18 @@ const useTreeNodeService = (node: NodeModel) => {
   const handleEditNode = () => {}
 
   const childTypeSelector = (nodeType: 'file' | 'folder') => {
-    const newNode = {
+    const newNode: NodeModel = {
       id: Date.now().toString(),
       name: '',
       type: nodeType,
       children: nodeType === 'folder' ? [] : undefined,
     }
+    node.children = [...(node.children || []), newNode]
+    setTreeArray((prev) => [...prev]) // trigger rerndering
     setEditingNodeId(newNode.id)
+    setNodeTypeSelect(null)
   }
+
   return {
     isEditing,
     treeArray,

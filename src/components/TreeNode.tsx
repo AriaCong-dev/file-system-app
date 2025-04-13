@@ -18,7 +18,7 @@ interface TreeNodeProps {
 
 const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode, depth = 0 }) => {
   const {
-    isEditing,
+    // isEditing,
     inputType,
     setInputType,
     handleSaveNode,
@@ -38,6 +38,8 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode, depth = 0 }) => {
   const indentationStyle = (depth: number) => {
     return depth > 0 ? { paddingLeft: `${depth * 5}px` } : undefined
   }
+  const isEditing = editingNodeId === node.id
+
   return (
     <li className={styles.treeNodeContainer} style={indentationStyle(depth)}>
       <div
@@ -53,37 +55,59 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode, depth = 0 }) => {
             onCancel={handleCancelNode}
           />
         ) : (
-          <div className={styles.hoverContainer}>
-            {node.type === 'folder' ? (
-              <img src={folderIcon} alt="folder" className={styles.icon} />
-            ) : (
-              <img src={fileIcon} alt="file" className={styles.icon} />
-            )}
-            {node.name}
+          <>
+            <div className={styles.treeNodeItemContainer}>
+              {node.type === 'folder' ? (
+                <img src={folderIcon} alt="folder" className={styles.icon} />
+              ) : (
+                <img src={fileIcon} alt="file" className={styles.icon} />
+              )}
+              {node.name}
+            </div>
             {isHover && !editingNodeId && (
               <div className={styles.actionBtnContainer}>
-                <button
-                  className={styles.actionBtnRound}
-                  onClick={handleAddNode}
-                >
+                <button className={styles.actionBtn} onClick={handleAddNode}>
                   <img src={addIconDark} alt="add" />
                 </button>
-                <button className={styles.actionBtnRound}>
+                <button className={styles.actionBtn}>
                   <img src={deleteIconDark} alt="delete" />
                 </button>
               </div>
             )}
-            {nodeTypeSelect === node.id && (
-              <div style={indentationStyle(depth)}>
-                <button onClick={() => childTypeSelector('folder')}>
-                  Folder
-                </button>
-                <button onClick={() => childTypeSelector('file')}>File</button>
-              </div>
-            )}
-          </div>
+          </>
         )}
       </div>
+      {node.children && node.children.length > 0 && (
+        <ul>
+          {node.children.map((node) => {
+            return (
+              <TreeNode
+                key={node.id}
+                node={node}
+                parentNode={node}
+                depth={depth + 1}
+              />
+            )
+          })}
+        </ul>
+      )}
+      {nodeTypeSelect === node.id && (
+        //   <div style={indentationStyle(depth)}>
+        <div>
+          <button
+            className={styles.typeSelectionBtn}
+            onClick={() => childTypeSelector('folder')}
+          >
+            Folder
+          </button>
+          <button
+            className={styles.typeSelectionBtn}
+            onClick={() => childTypeSelector('file')}
+          >
+            File
+          </button>
+        </div>
+      )}
     </li>
   )
 }

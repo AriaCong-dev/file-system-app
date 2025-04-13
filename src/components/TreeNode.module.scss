@@ -2,117 +2,52 @@
 
 .treeNodeContainer {
   @include flex-column;
-  color: $black;
-  font-size: $font-size-base;
-  padding: $space-item;
-  justify-content: center;
-  transition: all 0.3s ease;
+  gap: $space-item;
 }
-
-@mixin line-style($height) {
-  content: '';
-  position: absolute;
-  left: -20px;
-  top: calc(#{$icon-size} / 2 * -1);
-  width: 20px;
-  height: $height;
-  border-color: $black;
-  border-left: 1px solid $black;
-}
-
-.treeNodeContainerLine {
-  position: relative;
-  &::before {
-    @include line-style(calc(100%));
-  }
-  &:last-child::before {
-    @include line-style($icon-size);
-  }
-  &:first-child::before {
-    @include line-style(calc(100% - #{$icon-size} / 2));
-    top: 0;
-  }
-  &:last-child:first-child::before {
-    @include line-style(calc(#{$icon-size} / 1.5));
-    top: 0;
-  }
-}
-
-.nodeContainerLine {
+.treeNodeItemContainer {
   display: flex;
   align-items: center;
   gap: $space-item;
-  position: relative;
-  &::after {
-    content: '';
-    position: absolute;
-    transform: translateX(calc(-100%)) translateY(-50%);
-    width: $icon-size / 1.5;
-    height: $icon-size;
-    border-bottom: 1px solid $black;
-  }
 }
-
-.treeNodeWrapper {
-  display: flex;
-  gap: $space-item;
-  align-items: center;
-}
-.treeNodeHover {
-  background-color: transparent;
-  border: $border-style;
-}
-
 .icon {
   width: $icon-size;
   height: $icon-size;
-  padding: $icon-padding;
-  object-fit: contain;
-}
-.commonBtn {
-  width: $icon-size;
-  height: $icon-size;
-  padding: $icon-padding;
-  border-radius: $border-radius;
-  cursor: pointer;
-  &:hover {
-    background-color: $hover-color;
-  }
 }
 
-.nodeContainer {
+.treeNodeHover {
+  border: $border-style;
+  background-color: transparent;
+}
+
+.actionBtnContainer {
   display: flex;
   align-items: center;
   gap: $space-item;
 }
-
-.actionBtnRound {
-  width: 25px;
-  height: 25px;
+.actionBtn {
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background-color: $black;
   @include flex-center;
   cursor: pointer;
   transition: background-color 0.2s ease;
-
   img {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
   }
 
   &:hover {
     background-color: $hover-color;
   }
 }
-.nodeTypeBtn {
-  padding: $space-item;
+.typeSelectionBtn {
+  width: 100px;
+  height: 30px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
   font-size: $font-size-base;
-  background-color: $hover-color;
-  border-radius: $border-radius;
-  border: $border-style;
-}
-.actionBtnContainer {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  &:hover {
+    background-color: $hover-color;
+  }
 }
