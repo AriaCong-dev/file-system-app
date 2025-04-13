@@ -4,7 +4,7 @@ import noIconLight from '../assets/xmark-light.svg'
 import styles from './TreeNodeEdit.module.scss'
 
 interface TreeNodeEditProps {
-  nodeIcon: string
+  nodeIcon?: string
   nodeName: string
   onSave: (inputValue: string) => void
   onCancel: () => void
@@ -19,7 +19,9 @@ export const TreeNodeEdit: React.FC<TreeNodeEditProps> = ({
   const [inputValue, setInputValue] = useState(nodeName || '')
   return (
     <div className={styles.inputContainer}>
-      <img className={styles.icon} src={nodeIcon} alt={nodeIcon} />
+      {nodeIcon && (
+        <img className={styles.icon} src={nodeIcon} alt={nodeIcon} />
+      )}
       <input
         autoFocus
         className={styles.input}

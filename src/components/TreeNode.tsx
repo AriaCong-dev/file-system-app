@@ -16,16 +16,15 @@ interface TreeNodeProps {
 
 const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode, depth = 0 }) => {
   const {
-    inputType,
     handleSaveNode,
-    handleCancelNode,
+    handleDeleteOrCancelNode,
     handleAddNode,
-    handleDeleteNode,
     editingNodeId,
     nodeTypeSelect,
     childTypeSelector,
   } = useTreeNodeService(node, parentNode)
   const [isHover, setIsHover] = useState(false)
+  const [isRenaming, setIsRenaming] = useState(false)
 
   const indentationStyle = (depth: number) => {
     return depth > 0 ? { paddingLeft: `${depth * 5}px` } : undefined
@@ -44,7 +43,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode, depth = 0 }) => {
             nodeIcon={node.type === 'folder' ? folderIcon : fileIcon}
             nodeName={node.name || ''}
             onSave={handleSaveNode}
-            onCancel={handleCancelNode}
+            onCancel={handleDeleteOrCancelNode}
           />
         ) : (
           <>
@@ -54,14 +53,39 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, parentNode, depth = 0 }) => {
               ) : (
                 <img src={fileIcon} alt="file" className={styles.icon} />
               )}
-              {node.name}
+              <div
+                onDoubleClick={() => {
+                  setIsRenaming(true)
+                  setIsHover(false)
+                }}
+              >
+                {isRenaming ? ( // callback function review
+                  <TreeNodeEdit
+                    nodeName={node.name || ''}
+                    onSave={(input) => {
+                      handleSaveNode(input)
+                      setIsRenaming(false)
+                    }}
+                    onCancel={
+                      node.name
+                        ? () => setIsRenaming(false)
+                        : handleDeleteOrCancelNode
+                    }
+                  />
+                ) : (
+                  node.name
+                )}
+              </div>
             </div>
             {isHover && !editingNodeId && (
               <div className={styles.actionBtnContainer}>
                 <button className={styles.actionBtn} onClick={handleAddNode}>
                   <img src={addIconDark} alt="add" />
                 </button>
-                <button className={styles.actionBtn} onClick={handleDeleteNode}>
+                <button
+                  className={styles.actionBtn}
+                  onClick={handleDeleteOrCancelNode}
+                >
                   <img src={deleteIconDark} alt="delete" />
                 </button>
               </div>
