@@ -54,3 +54,13 @@
     background-color: $hover-color;
   }
 }
+.collapseBtn {
+  width: 15px;
+  height: 15px;
+  @include flex-center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  &:hover {
+    background-color: $hover-color;
+  }
+}
