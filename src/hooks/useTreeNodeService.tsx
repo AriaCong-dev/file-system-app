@@ -3,8 +3,16 @@ import { useTreeContext } from '../contexts/TreeContext'
 import { NodeModel } from '../models/node.model'
 
 const useTreeNodeService = (node: NodeModel, parentNode?: NodeModel) => {
-  const { treeArray, setTreeArray, editingNodeId, setEditingNodeId } =
-    useTreeContext()
+  const {
+    treeArray,
+    setTreeArray,
+    editingNodeId,
+    setEditingNodeId,
+    draggingNode,
+    setDraggingNode,
+    draggingNodeParentNode,
+    setDraggingNodeParentNode,
+  } = useTreeContext()
   const [inputType, setInputType] = useState<string | null>('')
   const [nodeTypeSelect, setNodeTypeSelect] = useState<string | null>(null)
 
@@ -72,6 +80,10 @@ const useTreeNodeService = (node: NodeModel, parentNode?: NodeModel) => {
     nodeTypeSelect,
     setNodeTypeSelect,
     childTypeSelector,
+    draggingNode,
+    setDraggingNode,
+    draggingNodeParentNode,
+    setDraggingNodeParentNode,
   }
 }
 

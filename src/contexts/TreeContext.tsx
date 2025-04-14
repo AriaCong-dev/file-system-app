@@ -7,6 +7,12 @@ interface TreeContextProps {
   setTreeArray: React.Dispatch<React.SetStateAction<NodeModel[]>>
   editingNodeId: string | null
   setEditingNodeId: React.Dispatch<React.SetStateAction<string | null>>
+  draggingNode: NodeModel | null
+  setDraggingNode: React.Dispatch<React.SetStateAction<NodeModel | null>>
+  draggingNodeParentNode?: NodeModel | null
+  setDraggingNodeParentNode?: React.Dispatch<
+    React.SetStateAction<NodeModel | null>
+  >
 }
 // 1. create context and define the init value
 export const TreeContext = createContext<TreeContextProps | undefined>(
@@ -17,6 +23,9 @@ export const TreeContextProvider = ({ children }: { children: ReactNode }) => {
   // state to manage the tree array
   const [treeArray, setTreeArray] = useState<NodeModel[]>([])
   const [editingNodeId, setEditingNodeId] = useState<string | null>(null)
+  const [draggingNode, setDraggingNode] = useState<NodeModel | null>(null)
+  const [draggingNodeParentNode, setDraggingNodeParentNode] =
+    useState<NodeModel | null>(null)
   return (
     <TreeContext.Provider
       value={{
@@ -24,6 +33,10 @@ export const TreeContextProvider = ({ children }: { children: ReactNode }) => {
         setTreeArray,
         editingNodeId,
         setEditingNodeId,
+        draggingNode,
+        setDraggingNode,
+        draggingNodeParentNode,
+        setDraggingNodeParentNode,
       }}
     >
       {children}
