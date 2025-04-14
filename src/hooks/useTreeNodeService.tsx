@@ -12,11 +12,14 @@ const useTreeNodeService = (node: NodeModel, parentNode?: NodeModel) => {
     setDraggingNode,
     draggingNodeParentNode,
     setDraggingNodeParentNode,
+    searchValue,
+    setSearchValue,
   } = useTreeContext()
   const [inputType, setInputType] = useState<string | null>('')
   const [nodeTypeSelect, setNodeTypeSelect] = useState<string | null>(null)
 
   const isEditing = editingNodeId === node.id
+  const isHighlighting = node.name === searchValue
 
   const isValid = (inputValue: string): boolean => {
     if (inputValue.trim().includes(' ') || inputValue.trim() === '') {
@@ -93,6 +96,9 @@ const useTreeNodeService = (node: NodeModel, parentNode?: NodeModel) => {
     setDraggingNode,
     draggingNodeParentNode,
     setDraggingNodeParentNode,
+    searchValue,
+    setSearchValue,
+    isHighlighting,
   }
 }
 

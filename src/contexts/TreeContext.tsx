@@ -15,8 +15,6 @@ interface TreeContextProps {
   >
   searchValue: string
   setSearchValue: React.Dispatch<React.SetStateAction<string>>
-  hightlightNode: NodeModel | null
-  setHightlightNode: React.Dispatch<React.SetStateAction<NodeModel | null>>
 }
 // 1. create context and define the init value
 export const TreeContext = createContext<TreeContextProps | undefined>(
@@ -31,7 +29,6 @@ export const TreeContextProvider = ({ children }: { children: ReactNode }) => {
   const [draggingNodeParentNode, setDraggingNodeParentNode] =
     useState<NodeModel | null>(null)
   const [searchValue, setSearchValue] = useState<string>('')
-  const [hightlightNode, setHightlightNode] = useState<NodeModel | null>(null)
   return (
     <TreeContext.Provider
       value={{
@@ -45,8 +42,6 @@ export const TreeContextProvider = ({ children }: { children: ReactNode }) => {
         setDraggingNodeParentNode,
         searchValue,
         setSearchValue,
-        hightlightNode,
-        setHightlightNode,
       }}
     >
       {children}

@@ -7,6 +7,7 @@ const TreeView: React.FC = () => {
   const {
     treeArray,
     setTreeArray,
+    editingNodeId,
     setEditingNodeId,
     searchValue,
     setSearchValue,
@@ -24,7 +25,11 @@ const TreeView: React.FC = () => {
   return (
     <div className={styles.treeViewContainer}>
       <div className={styles.treeView}>
-        <button className={styles.addRootBtn} onClick={handleAddToRoot}>
+        <button
+          className={styles.addRootBtn}
+          onClick={handleAddToRoot}
+          disabled={editingNodeId !== null}
+        >
           Add to Root
         </button>
         <ul className={styles.treeViewList}>
