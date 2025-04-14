@@ -9,8 +9,8 @@ interface TreeContextProps {
   setEditingNodeId: React.Dispatch<React.SetStateAction<string | null>>
   draggingNode: NodeModel | null
   setDraggingNode: React.Dispatch<React.SetStateAction<NodeModel | null>>
-  draggingNodeParentNode?: NodeModel | null
-  setDraggingNodeParentNode?: React.Dispatch<
+  draggingNodeParentNode: NodeModel | null
+  setDraggingNodeParentNode: React.Dispatch<
     React.SetStateAction<NodeModel | null>
   >
 }

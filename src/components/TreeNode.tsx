@@ -23,6 +23,8 @@ const TreeNode: React.FC<TreeNodeProps> = ({
   isDisabled,
 }) => {
   const {
+    treeArray,
+    setTreeArray,
     handleSaveNode,
     handleDeleteOrCancelNode,
     handleAddNode,
@@ -33,8 +35,6 @@ const TreeNode: React.FC<TreeNodeProps> = ({
     setDraggingNode,
     draggingNodeParentNode,
     setDraggingNodeParentNode,
-    treeArray,
-    setTreeArray,
   } = useTreeNodeService(node, parentNode)
   const [isHover, setIsHover] = useState(false)
   const [isRenaming, setIsRenaming] = useState(false)
@@ -55,15 +55,11 @@ const TreeNode: React.FC<TreeNodeProps> = ({
   ) => {
     setDraggingNode(node)
     setIsDragging(true)
-    if (parentNode && setDraggingNodeParentNode) {
-      // ?????
-      setDraggingNodeParentNode(parentNode)
-    }
+    parentNode && setDraggingNodeParentNode(parentNode)
   }
   const handleOnDrop: DragEventHandler<HTMLDivElement> = (
     e: DragEvent<HTMLDivElement>
   ) => {
-    // illegal drop
     if (
       draggingNode?.id === node.id ||
       !draggingNode ||
