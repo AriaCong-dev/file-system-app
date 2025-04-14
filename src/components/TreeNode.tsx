@@ -69,20 +69,37 @@ const TreeNode: React.FC<TreeNodeProps> = ({
     ) {
       setDraggingNode(null)
       setIsDragging(false)
+      setDraggingNodeParentNode(null)
       return
     }
+
+    const hasDuplicateName = node.children?.some(
+      (child) => child.name === draggingNode.name
+    )
+
+    if (hasDuplicateName) {
+      alert('A node with the same name already exists in this folder.')
+      setDraggingNode(null)
+      setIsDragging(false)
+      setDraggingNodeParentNode(null)
+      return
+    }
+
     let newTree = [...treeArray]
     // 1. check if the node has parent, if yes, fillter it out from the parent node
     if (draggingNodeParentNode) {
+      console.log('draggingNodeParentNode', draggingNodeParentNode)
       draggingNodeParentNode.children = draggingNodeParentNode.children?.filter(
-        (child) => child.id !== draggingNode.id // bug here
+        (child) => child.id !== draggingNode.id
       )
     } else {
       newTree = newTree?.filter((child) => child.id !== draggingNode.id)
+      console.log('newTree', newTree)
     }
     node.children = [...(node?.children ?? []), draggingNode]
     setTreeArray(newTree)
     setDraggingNode(null)
+    setDraggingNodeParentNode(null)
     setIsDragging(false)
   }
   const handleOnDragOver = (e: React.DragEvent<HTMLDivElement>) => {
