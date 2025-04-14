@@ -3,8 +3,16 @@ import { useTreeContext } from '../contexts/TreeContext'
 import { NodeModel } from '../models/node.model'
 
 const useTreeNodeService = (node: NodeModel, parentNode?: NodeModel) => {
-  const { treeArray, setTreeArray, editingNodeId, setEditingNodeId } =
-    useTreeContext()
+  const {
+    treeArray,
+    setTreeArray,
+    editingNodeId,
+    setEditingNodeId,
+    draggingNode,
+    setDraggingNode,
+    draggingNodeParentNode,
+    setDraggingNodeParentNode,
+  } = useTreeContext()
   const [inputType, setInputType] = useState<string | null>('')
   const [nodeTypeSelect, setNodeTypeSelect] = useState<string | null>(null)
 
@@ -43,7 +51,6 @@ const useTreeNodeService = (node: NodeModel, parentNode?: NodeModel) => {
     }
     setEditingNodeId(null)
   }
-  const handleEditNode = () => {}
 
   const childTypeSelector = (nodeType: 'file' | 'folder') => {
     const newNode: NodeModel = {
@@ -52,6 +59,7 @@ const useTreeNodeService = (node: NodeModel, parentNode?: NodeModel) => {
       type: nodeType,
       children: nodeType === 'folder' ? [] : undefined,
     }
+
     node.children = [...(node.children || []), newNode]
     setTreeArray((prev) => [...prev]) // trigger rerndering
     setEditingNodeId(newNode.id)
@@ -72,6 +80,10 @@ const useTreeNodeService = (node: NodeModel, parentNode?: NodeModel) => {
     nodeTypeSelect,
     setNodeTypeSelect,
     childTypeSelector,
+    draggingNode,
+    setDraggingNode,
+    draggingNodeParentNode,
+    setDraggingNodeParentNode,
   }
 }
 
