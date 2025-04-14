@@ -23,3 +23,7 @@
   margin-top: auto; // push it to the bottom of the container
   margin-bottom: 40px; // add some space from bottom
 }
+.downloadBtn {
+  @include common-btn-rectangle;
+  height: 50px;
+}

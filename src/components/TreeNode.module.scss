@@ -46,14 +46,7 @@
   }
 }
 .typeSelectionBtn {
-  width: 100px;
-  height: 30px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  font-size: $font-size-base;
-  &:hover {
-    background-color: $hover-color;
-  }
+  @include common-btn-rectangle;
 }
 .collapseBtn {
   width: 15px;

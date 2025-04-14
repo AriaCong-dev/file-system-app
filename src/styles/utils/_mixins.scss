@@ -15,3 +15,14 @@
   margin: auto 0;
   text-align: center;
 }
+
+@mixin common-btn-rectangle {
+  width: 100px;
+  height: 30px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: $font-size-base;
+  &:hover {
+    background-color: $hover-color;
+  }
+}
