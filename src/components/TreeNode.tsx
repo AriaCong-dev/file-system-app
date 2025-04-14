@@ -35,6 +35,8 @@ const TreeNode: React.FC<TreeNodeProps> = ({
     setDraggingNode,
     draggingNodeParentNode,
     setDraggingNodeParentNode,
+    isEditing,
+    isHighlighting,
   } = useTreeNodeService(node, parentNode)
   const [isHover, setIsHover] = useState(false)
   const [isRenaming, setIsRenaming] = useState(false)
@@ -48,7 +50,6 @@ const TreeNode: React.FC<TreeNodeProps> = ({
   const indentationStyle = (depth: number) => {
     return depth > 0 ? { paddingLeft: `${depth * 5}px` } : undefined
   }
-  const isEditing = editingNodeId === node.id
 
   const handleOnDrag: DragEventHandler<HTMLDivElement> = (
     e: DragEvent<HTMLDivElement>
@@ -128,9 +129,15 @@ const TreeNode: React.FC<TreeNodeProps> = ({
                   <img src={folderIcon} alt="folder" className={styles.icon} />
                 </>
               ) : (
-                <img src={fileIcon} alt="file" className={styles.icon} />
+                <>
+                  <button className={styles.placeholder}></button>
+                  <img src={fileIcon} alt="file" className={styles.icon} />
+                </>
               )}
               <div
+                className={`${
+                  isHighlighting && !isRenaming && styles.highlight
+                } `}
                 onDoubleClick={() => {
                   setIsRenaming(true)
                   setIsHover(false)

@@ -26,3 +26,15 @@
     background-color: $hover-color;
   }
 }
+
+@mixin common-input {
+  border: 1px solid $black;
+  border-radius: 0.25rem;
+  font-size: $font-size-base;
+  width: 12rem;
+  height: 2rem;
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+  }
+}

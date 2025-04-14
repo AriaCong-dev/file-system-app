@@ -12,19 +12,31 @@ const useTreeNodeService = (node: NodeModel, parentNode?: NodeModel) => {
     setDraggingNode,
     draggingNodeParentNode,
     setDraggingNodeParentNode,
+    searchValue,
+    setSearchValue,
   } = useTreeContext()
   const [inputType, setInputType] = useState<string | null>('')
   const [nodeTypeSelect, setNodeTypeSelect] = useState<string | null>(null)
 
   const isEditing = editingNodeId === node.id
+  const isHighlighting = node.name === searchValue
 
-  const isNotValid = (inputValue: string): boolean => {
-    return inputValue.trim().includes(' ') || inputValue.trim() === ''
+  const isValid = (inputValue: string): boolean => {
+    if (inputValue.trim().includes(' ') || inputValue.trim() === '') {
+      alert('Name cannot be empty or contain spaces')
+      return false
+    }
+    const isDuplicate = (siblings: NodeModel[]): boolean =>
+      !!siblings.find((sibling) => sibling.name === inputValue.trim()) // syntax!!!
+    if (isDuplicate(parentNode ? parentNode.children ?? [] : treeArray)) {
+      alert('Name already exists')
+      return false
+    }
+    return true
   }
 
   const handleSaveNode = (inputValue: string) => {
-    if (isNotValid(inputValue)) {
-      alert('Invalid input')
+    if (!isValid(inputValue)) {
       return
     }
     node.name = inputValue.trim()
@@ -84,6 +96,9 @@ const useTreeNodeService = (node: NodeModel, parentNode?: NodeModel) => {
     setDraggingNode,
     draggingNodeParentNode,
     setDraggingNodeParentNode,
+    searchValue,
+    setSearchValue,
+    isHighlighting,
   }
 }
 

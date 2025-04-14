@@ -4,7 +4,14 @@ import { NodeModel } from '../models/node.model'
 import { useTreeContext } from '../contexts/TreeContext'
 
 const TreeView: React.FC = () => {
-  const { treeArray, setTreeArray, setEditingNodeId } = useTreeContext()
+  const {
+    treeArray,
+    setTreeArray,
+    editingNodeId,
+    setEditingNodeId,
+    searchValue,
+    setSearchValue,
+  } = useTreeContext()
   const handleAddToRoot = () => {
     const newNode: NodeModel = {
       id: Date.now().toString(),
@@ -17,14 +24,31 @@ const TreeView: React.FC = () => {
   }
   return (
     <div className={styles.treeViewContainer}>
-      <button className={styles.addRootBtn} onClick={handleAddToRoot}>
-        Add to Root
-      </button>
-      <ul className={styles.treeViewList}>
-        {treeArray.map((node) => (
-          <TreeNode key={node.id} node={node} />
-        ))}
-      </ul>
+      <div className={styles.treeView}>
+        <button
+          className={styles.addRootBtn}
+          onClick={handleAddToRoot}
+          disabled={editingNodeId !== null}
+        >
+          Add to Root
+        </button>
+        <ul className={styles.treeViewList}>
+          {treeArray.map((node) => (
+            <TreeNode key={node.id} node={node} />
+          ))}
+        </ul>
+      </div>
+      <div className={styles.searchView}>
+        <input
+          className={styles.searchInput}
+          autoFocus
+          value={searchValue}
+          onChange={(e) => {
+            setSearchValue(e.target.value)
+          }}
+        />
+        <ul></ul>
+      </div>
     </div>
   )
 }
