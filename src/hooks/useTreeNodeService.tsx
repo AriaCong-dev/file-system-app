@@ -43,7 +43,9 @@ const useTreeNodeService = (node: NodeModel, parentNode?: NodeModel) => {
     setEditingNodeId(null)
     setTreeArray((prev) => [...prev])
   }
-
+  // User clicks "Add" ➝ sets which node should show folder/file type options.
+  // It sets typeSelector to the current node’s ID.
+  // set up which node to add to
   const handleAddNode = () => {
     setNodeTypeSelect(node.id)
   }
@@ -63,7 +65,11 @@ const useTreeNodeService = (node: NodeModel, parentNode?: NodeModel) => {
     }
     setEditingNodeId(null)
   }
-
+  {
+    /* Only show these buttons under the node I just clicked 'Add' on. */
+    /* setTypeSelector(node.id), it changes the typeSelector to the current node’s ID,*/
+    /* triggers re-render here */
+  } //User picks a type ("folder" or "file") ➝ creates a new child node and sets it into editing mode.
   const childTypeSelector = (nodeType: 'file' | 'folder') => {
     const newNode: NodeModel = {
       id: Date.now().toString(),
@@ -71,11 +77,12 @@ const useTreeNodeService = (node: NodeModel, parentNode?: NodeModel) => {
       type: nodeType,
       children: nodeType === 'folder' ? [] : undefined,
     }
-
+    // New node is rendered with an input box, by editingNodeId.
+    // New node gets added as a child of the current node (node.children)
     node.children = [...(node.children || []), newNode]
     setTreeArray((prev) => [...prev]) // trigger rerndering
-    setEditingNodeId(newNode.id)
-    setNodeTypeSelect(null)
+    setEditingNodeId(newNode.id) // makes that new node enter editing mode
+    setNodeTypeSelect(null) // hides the Folder/File buttons again
   }
 
   return {
