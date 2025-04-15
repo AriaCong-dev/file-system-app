@@ -38,23 +38,24 @@ const TreeView: React.FC = () => {
   //     }
   //   }
 
-  //   const handleIteration = (node: NodeModel) => {
-  //     const stack: NodeModel[] = [node] // define an array to save the stack
+  // const handleIteration = (node: NodeModel) => {
+  //   const stack: NodeModel[] = [node] // define an array to save the stack
 
-  //     while (stack.length > 0) {
-  //       const current = stack.pop() // remove executed node
-  //       if (!current) continue
+  //   while (stack.length > 0) {
+  //     const current = stack.pop() // remove executed node
+  //     if (!current) continue
 
-  //       if (current.children) {
-  //         current.children.forEach((node) => {
-  //           stack.push(node)
-  //         })
-  //       }
-  //       checkAndAddToSearchResult(current)
+  //     if (current.children) {
+  //       current.children.forEach((node) => {
+  //         stack.push(node)
+  //       })
   //     }
+  //     checkAndAddToSearchResult(current)
   //   }
-  const searchResults: NodeModel[] = []
+  // }
+  let searchResults: NodeModel[] = []
   useEffect(() => {
+    searchResults = []
     const checkAddToSearchResults = (childNode: NodeModel) => {
       if (childNode.name?.includes(searchValue)) {
         searchResults.push(childNode)
